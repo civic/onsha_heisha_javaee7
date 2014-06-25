@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "GreetingServlet", urlPatterns = {"/greeting"})
 public class GreetingServlet extends HttpServlet {
     @Inject
+    @Informal
     private Greeting greeting;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
