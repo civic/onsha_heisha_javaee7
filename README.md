@@ -66,6 +66,7 @@ GlassFishの起動時に、JavaDBのセキュリティマネージャーが云�
 1. [Overview](01.Overview.md)
 2. [Web Tier](02.WebTier.md)
 3. [CDI](03.CDI.md)
+4. [JAX-RS(REST)](04.JAX-RS.md)
 
 メモ
 --------
