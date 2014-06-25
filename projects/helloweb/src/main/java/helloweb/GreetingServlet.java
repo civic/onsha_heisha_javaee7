@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package helloweb;
 
@@ -13,17 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author tsasaki
- */
 @WebServlet(name = "GreetingServlet", urlPatterns = {"/greeting"})
 public class GreetingServlet extends HttpServlet {
+
+    private Greeting greeting = new Greeting();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
-        resp.getWriter().println("Hello World. " + (username == null ? "" : username));
+        resp.getWriter().println(greeting.greet(username));
     }
 
     
