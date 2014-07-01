@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -14,7 +15,9 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/chat/{roomNo}")
+@ServerEndpoint(value="/chat/{roomNo}", 
+        decoders={ChatMessageDecorder.class}, 
+        encoders = {ChatMessageEncoder.class})
 public class ChatEndpoint {
     private String roomNo;
     private static final Map<String, Set<Session>> roomSession = new HashMap<>();
@@ -31,9 +34,9 @@ public class ChatEndpoint {
     }
 
     @OnMessage
-    public void onMessage(String message) throws IOException {
+    public void onMessage(ChatMessage msg) throws IOException, EncodeException {
         for (Session session : roomSession.get(this.roomNo)){
-            session.getBasicRemote().sendText(message);
+            session.getBasicRemote().sendObject(msg);
         }
     }
     

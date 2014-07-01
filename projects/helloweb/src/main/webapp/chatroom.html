@@ -14,8 +14,8 @@
                         $("#log").text("");
                     };
                     socket.onmessage = function(e){
-                        console.log(e.data);
-                        $("<div/>").text(e.data).appendTo("#log");
+                        var msg = JSON.parse(e.data);
+                        $("<div/>").text(new Date(msg.timestamp) +":"+ msg.talk).appendTo("#log");
                     };
                 });
                 $("#send").on("click", function(){
