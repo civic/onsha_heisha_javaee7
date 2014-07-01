@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" ></script>
+        <script type="text/javascript">
+            $(function(){
+                var socket;
+                $("#change").on("click", function(){
+                    socket = new WebSocket("ws://localhost:8080/helloweb/chat/"+$("#roomNo").val());
+                    socket.onopen = function(){
+                        $("#log").text("");
+                    };
+                    socket.onmessage = function(e){
+                        var msg = JSON.parse(e.data);
+                        $("<div/>").text(new Date(msg.timestamp) +":"+ msg.talk).appendTo("#log");
+                    };
+                });
+                $("#send").on("click", function(){
+                    socket.send($("#msg").val());
+                    $("#msg").val("");
+                });
+                $("#change").click();
+            });
+        </script>
+    </head>
+    <body>
+        <input type="text" id="roomNo" value="1" size="1"/><button id="change">change</button>
+
+        <input type="text" id="msg" /><button id="send">send</button>
+        <div id="log"></div>
+    </body>
+</html>
