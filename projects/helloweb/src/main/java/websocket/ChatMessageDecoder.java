@@ -5,7 +5,7 @@ import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
-public class ChatMessageDecorder implements Decoder.Text<ChatMessage> {
+public class ChatMessageDecoder implements Decoder.Text<ChatMessage> {
 
     @Override
     public ChatMessage decode(String s) throws DecodeException {

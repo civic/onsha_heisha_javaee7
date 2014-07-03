@@ -1,4 +1,4 @@
-package websocket;
+package javaeeclient;
 
 import java.io.IOException;
 import java.net.URI;
@@ -10,20 +10,16 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
-@ClientEndpoint
-public class EchoEndpointTest {
-    @Test
-    public void testOnMessage() throws Exception {
+public class WebSocketClient {
+    public static void main(String[] args) throws Exception{
+        
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 
         TestClientEndpoint tce = new TestClientEndpoint("hello");
         container.connectToServer(tce, new URI("ws://localhost:8080/helloweb/echo"));
 
-        assertThat(tce.get(), is("From server::: hello"));
+        System.out.println(tce.get());
     }
 
     @ClientEndpoint
@@ -52,5 +48,5 @@ public class EchoEndpointTest {
             return this.receive;
         }
     }
-
+    
 }

@@ -9,6 +9,9 @@
             $(function(){
                 var socket;
                 $("#change").on("click", function(){
+                    if (socket){
+                        socket.close(); //退室
+                    }
                     socket = new WebSocket("ws://localhost:8080/helloweb/chat/"+$("#roomNo").val());
                     socket.onopen = function(){
                         $("#log").text("");
@@ -22,7 +25,7 @@
                     socket.send($("#msg").val());
                     $("#msg").val("");
                 });
-                $("#change").click();
+                $("#change").click();   //起動時入室
             });
         </script>
     </head>
