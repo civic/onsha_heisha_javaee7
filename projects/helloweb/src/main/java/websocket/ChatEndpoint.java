@@ -18,29 +18,31 @@ import javax.websocket.server.ServerEndpoint;
         encoders = {ChatMessageEncoder.class})
 public class ChatEndpoint {
     private String roomNo;
-    private static final Map<String, Set<Session>> roomSession = new HashMap<>();
+    private static final Map<String, Set<Session>> roomSessions = new HashMap<>();
 
     @OnOpen
     public void onOpen(Session session, @PathParam("roomNo") String rn) throws IOException{
         this.roomNo = rn;
-        synchronized(roomSession){
-            if (!roomSession.containsKey(rn)){
-                roomSession.put(rn, new HashSet<Session>());
+        synchronized(roomSessions){
+            if (!roomSessions.containsKey(rn)){
+                //初めて作成入る部屋用のSetを作成
+                roomSessions.put(rn, new HashSet<Session>());
             }
-            roomSession.get(this.roomNo).add(session);
+            roomSessions.get(this.roomNo).add(session);
+            //roomSessions.computeIfAbsent(this.roomNo, s -> new HashSet<>()).add(session); //jdk8
         }
     }
 
     @OnMessage
     public void onMessage(ChatMessage msg) throws IOException, EncodeException {
-        for (Session session : roomSession.get(this.roomNo)){
+        for (Session session : roomSessions.get(this.roomNo)){
             session.getBasicRemote().sendObject(msg);
         }
     }
     
     @OnClose
     public void onClose(Session session) throws IOException{
-        roomSession.get(this.roomNo).remove(session);
+        roomSessions.get(this.roomNo).remove(session);
 
     }
 }
