@@ -68,6 +68,8 @@ GlassFishの起動時に、JavaDBのセキュリティマネージャーが云�
 3. [CDI](03.CDI.md)
 4. [JAX-RS(REST)](04.JAX-RS.md)
 5. [WebSocket](05.WebSocket.md)
+6. [EJB](06.EJB.md)
+7. [JPA](07.JPA.md)
 
 メモ
 --------
